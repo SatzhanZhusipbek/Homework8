@@ -1,15 +1,25 @@
 package org.example;
 
+import jakarta.persistence.*;
+import lombok.Data;
+
 import java.sql.Date;
-
+@Data
+@Entity
+@Table(name = "Ticket")
 public class Ticket {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
 
+    @Column(name="user_id")
     private int userId;
 
+    @Column(name="ticket_type")
     private String ticketType;
 
+    @Column(name="creation_date")
     private Date creationDate;
 
     public Ticket(int userId, String ticketType, Date creationDate) {
