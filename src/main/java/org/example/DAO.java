@@ -1,12 +1,15 @@
 package org.example;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class DAO {
 
-    public static void save(User user) throws SQLException, ClassNotFoundException {
+
+    public void save(User user) throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
         Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/my_ticket_service_db",
                 "postgres", "malboro");
@@ -26,7 +29,7 @@ public class DAO {
         }
     }
 
-    public static void save(Ticket ticket) throws SQLException, ClassNotFoundException {
+    public void save(Ticket ticket) throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
         Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/my_ticket_service_db",
                 "postgres", "malboro");
@@ -49,7 +52,7 @@ public class DAO {
     }
 
 
-    public static Ticket fetchTicket(int id) throws ClassNotFoundException, SQLException {
+    public Ticket fetchTicket(int id) throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
         Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/my_ticket_service_db",
                 "postgres", "malboro");
@@ -72,7 +75,7 @@ public class DAO {
         }
     }
 
-    public static List<Ticket> fetchTicketsByUserId(int userId) throws ClassNotFoundException, SQLException {
+    public List<Ticket> fetchTicketsByUserId(int userId) throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
         Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/my_ticket_service_db",
                 "postgres", "malboro");
@@ -97,7 +100,7 @@ public class DAO {
         }
     }
 
-    public static User fetchUserById(int id) throws ClassNotFoundException, SQLException {
+    public User fetchUserById(int id) throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
         Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/my_ticket_service_db",
                 "postgres", "malboro");
@@ -119,7 +122,7 @@ public class DAO {
         }
     }
 
-    public static void updateTicketType(String type, int id) throws SQLException, ClassNotFoundException {
+    public void updateTicketType(String type, int id) throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
         Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/my_ticket_service_db",
                 "postgres", "malboro");
@@ -139,7 +142,7 @@ public class DAO {
         }
     }
 
-    public static void delete(User user) throws SQLException, ClassNotFoundException {
+    public void delete(User user) throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
         Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/my_ticket_service_db",
                 "postgres", "malboro");
