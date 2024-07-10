@@ -2,7 +2,9 @@ package org.example;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserDAO {
     public User findUserById(int id) {
         return SessionFactoryProvider.getSessionFactory()

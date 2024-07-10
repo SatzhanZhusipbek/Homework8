@@ -3,6 +3,10 @@ package org.example;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "Person")
@@ -19,6 +23,11 @@ public class User {
     @Column(name = "creation_date")
     private java.sql.Date creationDate;
 
+    @OneToMany(mappedBy = "post",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Ticket> tickets = new ArrayList<>();
+
     public User(String name, java.sql.Date creationDate) {
         this.name = name;
         this.creationDate = creationDate;
@@ -26,6 +35,16 @@ public class User {
 
     public User() {
 
+    }
+
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
+        ticket.setUser(this);
+    }
+
+    public void removeTicket(Ticket ticket) {
+        tickets.remove(ticket);
+        ticket.setUser(null);
     }
 
     public int getId() {
@@ -44,11 +63,21 @@ public class User {
         this.name = name;
     }
 
-    public java.sql.Date getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(java.sql.Date date) {
-        this.creationDate=date;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+
 }
