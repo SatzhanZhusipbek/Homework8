@@ -9,8 +9,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @ComponentScan
 public class Main {
@@ -27,9 +30,16 @@ public class Main {
         User user = new User("Sam", Date.valueOf(LocalDate.now()));
         dao.save(user);*/
         ApplicationContext ap = new AnnotationConfigApplicationContext(MyConfiguration.class);
-        Resource file = ap.getResource("classpath:resources/input.txt");
-        loadToList(file.getFile());
-        System.out.println(tickets);
+        Resource file = ap.getResource("classpath:input.txt");
+        //loadToList(file.getFile());
+        //System.out.println(tickets);
+        User user = new User("Max", Date.valueOf(LocalDate.now()));
+        UserDAO userDAO = new UserDAO();
+        userDAO.save(user);
+        Ticket ticket = new Ticket("DAY", Date.valueOf(LocalDate.now()));
+        ticket.setUser(user);
+        TicketDAO ticketDAO = new TicketDAO();
+        ticketDAO.save(ticket);
 
     }
 

@@ -38,7 +38,7 @@ public class DAO {
                 con.prepareStatement("INSERT INTO Ticket " +
                         "(user_id, ticket_type, creation_date)" +
                         "VALUES (?, ?, ?)");
-        statement.setInt(1, ticket.getUserId());
+        statement.setInt(1, ticket.getUser().getId());
         statement.setString(2, ticket.getTicketType());
         statement.setDate(3, ticket.getCreationDate());
         try {
@@ -64,7 +64,7 @@ public class DAO {
             ResultSet rs = statement.executeQuery();
             while(rs.next()) {
                 searchedTicket.setId(rs.getInt("id"));
-                searchedTicket.setUserId(rs.getInt("user_id"));
+                searchedTicket.setUser(rs.getObject(4, User.class));
                 searchedTicket.setTicketType(rs.getString("ticket_type"));
                 searchedTicket.setCreationDate(rs.getDate("creation_date"));
             }
@@ -88,7 +88,7 @@ public class DAO {
             while (rs.next()) {
                 Ticket searchedTicket = new Ticket();
                 searchedTicket.setId(rs.getInt("id"));
-                searchedTicket.setUserId(rs.getInt("user_id"));
+                searchedTicket.setUser(rs.getObject(4, User.class));
                 searchedTicket.setTicketType(rs.getString("ticket_type"));
                 searchedTicket.setCreationDate(rs.getDate("creation_date"));
                 listOfTickets.add(searchedTicket);

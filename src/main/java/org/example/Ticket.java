@@ -13,9 +13,6 @@ public class Ticket {
     @Column(name="id")
     private int id;
 
-    @Column(name="user_id")
-    private int userId;
-
     @Column(name="ticket_type")
     private String ticketType;
 
@@ -25,8 +22,7 @@ public class Ticket {
     @ManyToOne(fetch=FetchType.LAZY)
     private User user;
 
-    public Ticket(int userId, String ticketType, Date creationDate) {
-        this.userId = userId;
+    public Ticket(String ticketType, Date creationDate) {
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
@@ -40,14 +36,6 @@ public class Ticket {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getTicketType() {

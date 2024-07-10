@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "Person")
+@Table(name="Person")
 public class User {
 
     @Id
@@ -17,13 +17,13 @@ public class User {
     @Column(name="id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name="name")
     private String name;
 
-    @Column(name = "creation_date")
+    @Column(name="creation_date")
     private java.sql.Date creationDate;
 
-    @OneToMany(mappedBy = "post",
+    @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();

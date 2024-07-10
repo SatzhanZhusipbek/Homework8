@@ -14,6 +14,8 @@ public class SessionFactoryProvider {
             try {
                 Configuration configuration = new Configuration();
                 configuration.addPackage("org.example");
+                configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(Ticket.class);
 //                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
 //                        .applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory();

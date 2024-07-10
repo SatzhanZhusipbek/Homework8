@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class TicketDAO {
+public class TicketDAO  {
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -31,13 +32,13 @@ public class TicketDAO {
     @Transactional
     public void save(Ticket ticket) {
         Session session = SessionFactoryProvider.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         UserDAO userDAO = new UserDAO();
-        User user = userDAO.findUserById(ticket.getUserId());
+        User user = userDAO.findUserById(ticket.getUser().getId());
         user.addTicket(ticket);
-        session.update(user);
+        session.merge(user);
         session.save(ticket);
-        transaction.commit();
+        //transaction.commit();
         session.close();
     }
 
@@ -56,4 +57,6 @@ public class TicketDAO {
         transaction.commit();
         session.close();
     }
+
+
 }
