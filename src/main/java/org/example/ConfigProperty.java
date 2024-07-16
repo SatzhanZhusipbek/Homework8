@@ -1,11 +1,6 @@
 package org.example;
 
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
-
-@Component
+/*@Component
 @PropertySource("classpath:application.properties")
 public class ConfigProperty implements InitializingBean {
 
@@ -17,4 +12,4 @@ public class ConfigProperty implements InitializingBean {
             throw new IllegalArgumentException("button must be on");
         }
     }
-}
+}*/

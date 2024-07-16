@@ -20,7 +20,7 @@ public class Ticket {
     private Date creationDate;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    private User user;
+    private User userId;
 
     public Ticket(String ticketType, Date creationDate) {
         this.ticketType = ticketType;
@@ -30,7 +30,7 @@ public class Ticket {
     public Ticket() {
 
     }
-    private int getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -55,11 +55,11 @@ public class Ticket {
     }
 
     public User getUser() {
-        return user;
+        return userId;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.userId = user;
     }
 
     @Override
