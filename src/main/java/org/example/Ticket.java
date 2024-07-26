@@ -13,17 +13,16 @@ public class Ticket {
     @Column(name="id")
     private int id;
 
-    @Column(name="user_id")
-    private int userId;
-
     @Column(name="ticket_type")
     private String ticketType;
 
     @Column(name="creation_date")
     private Date creationDate;
 
-    public Ticket(int userId, String ticketType, Date creationDate) {
-        this.userId = userId;
+    @ManyToOne(fetch=FetchType.LAZY)
+    private User user;
+
+    public Ticket(String ticketType, Date creationDate) {
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
@@ -31,21 +30,12 @@ public class Ticket {
     public Ticket() {
 
     }
-
-    public int getId() {
-        return id;
+    private int getId() {
+        return this.id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getTicketType() {
@@ -56,12 +46,32 @@ public class Ticket {
         this.ticketType = ticketType;
     }
 
-    public java.sql.Date getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Ticket )) return false;
+        return id != 0 && id == ((Ticket) o).getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 
 }

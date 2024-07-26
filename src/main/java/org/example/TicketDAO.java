@@ -3,12 +3,16 @@ package org.example;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-public class TicketDAO {
+@Component
+public class TicketDAO  {
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -25,12 +29,16 @@ public class TicketDAO {
        Query query = entityManager.createQuery(jpqlQuery, Ticket.class);
        return query.getResultList();
     }
-
+    @Transactional
     public void save(Ticket ticket) {
         Session session = SessionFactoryProvider.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
+        UserDAO userDAO = new UserDAO();
+        User user = userDAO.findUserById(ticket.getUser().getId());
+        user.addTicket(ticket);
+        session.merge(user);
         session.save(ticket);
-        transaction.commit();
+        //transaction.commit();
         session.close();
     }
 
@@ -49,4 +57,6 @@ public class TicketDAO {
         transaction.commit();
         session.close();
     }
+
+
 }
