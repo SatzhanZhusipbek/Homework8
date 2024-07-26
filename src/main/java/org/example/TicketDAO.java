@@ -1,62 +1,21 @@
 package org.example;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
-import jakarta.transaction.Transactional;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
-public class TicketDAO  {
+@Repository
+public interface TicketDAO extends CrudRepository<Ticket, Integer> {
+    @Query("select t from Ticket t where t.id=?1")
+    Ticket getTicketById(int id);
+    @Query("select t from Ticket t where t.userId=?1")
+    List<Ticket> getTicketsByUserId(int userId);
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public TicketDAO() {
-    }
-
-    public Ticket findTicketById(int id) {
-        return SessionFactoryProvider.getSessionFactory()
-                .openSession().get(Ticket.class, id);
-    }
-
-    public List<Ticket> findTicketsByUserId(int userId) {
-       String jpqlQuery = "SELECT t from Ticket t WHERE t.user_id = "+userId;
-       Query query = entityManager.createQuery(jpqlQuery, Ticket.class);
-       return query.getResultList();
-    }
-    @Transactional
-    public void save(Ticket ticket) {
-        Session session = SessionFactoryProvider.getSessionFactory().openSession();
-        //Transaction transaction = session.beginTransaction();
-        UserDAO userDAO = new UserDAO();
-        User user = userDAO.findUserById(ticket.getUser().getId());
-        user.addTicket(ticket);
-        session.merge(user);
-        session.save(ticket);
-        //transaction.commit();
-        session.close();
-    }
-
-    public void update(Ticket ticket) {
-        Session session = SessionFactoryProvider.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(ticket);
-        transaction.commit();
-        session.close();
-    }
-
-    public void delete(Ticket ticket) {
-        Session session = SessionFactoryProvider.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        session.delete(ticket);
-        transaction.commit();
-        session.close();
-    }
-
-
+    @Modifying
+    @Query(value = "update Ticket t set t.ticketType=?1 where t.id=?2",
+            nativeQuery = true)
+    void updateTicket(String ticketType, int ticketId);
 }

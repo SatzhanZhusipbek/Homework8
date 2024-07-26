@@ -23,7 +23,7 @@ public class User {
     @Column(name="creation_date")
     private java.sql.Date creationDate;
 
-    @OneToMany(mappedBy = "user",
+    @OneToMany(mappedBy = "userId",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Ticket> tickets = new ArrayList<>();
